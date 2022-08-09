@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div class="container" th:fragment="headerForGuests">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                <use xlink:href="#bootstrap"/>
+            </svg>
+        </a>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a th:href="@{/}" class="nav-link px-2 link-dark" th:text="#{header.home}">Home</a></li>
+
+            <li><a th:href="@{/news/0}" class="nav-link px-2 link-dark" th:text="#{header.news}">News</a></li>
+
+            <li><a th:href="@{/wanted/0}" class="nav-link px-2 link-dark" th:text="#{header.wanted}">Wanted</a></li>
+
+            <li><a th:href="@{/missing/0}" class="nav-link px-2 link-dark" th:text="#{header.missing}">Missing</a></li>
+        </ul>
+
+        <div th:replace="~{fragments::locale}"></div>
+
+        <div class="col-md-3 text-end">
+            <a th:href="@{/loginPage}" class="btn btn-outline-primary me-2" th:text="#{header.login}">Login</a>
+            <a th:href="@{/registration}" class="btn btn-primary" th:text="#{header.sign-up}">Sign-up</a>
+        </div>
+    </header>
+</div>
+
+<div class="container" th:fragment="headerForAuthenticated">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                <use xlink:href="#bootstrap"/>
+            </svg>
+        </a>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a th:href="@{/}" class="nav-link px-2 link-dark" th:text="#{header.home}">Home</a></li>
+
+            <li><a th:href="@{/news/0}" class="nav-link px-2 link-dark" th:text="#{header.news}">News</a></li>
+
+            <li><a th:href="@{/wanted/0}" class="nav-link px-2 link-dark" th:text="#{header.wanted}">Wanted</a></li>
+
+            <li><a th:href="@{/missing/0}" class="nav-link px-2 link-dark" th:text="#{header.missing}">Missing</a></li>
+
+
+            <li><a th:if="${session.sessionUser.role.name() eq 'ADMIN'}" th:href="@{/requests}"
+                   class="nav-link px-2 link-dark" th:text="#{header.requests}">Requests</a></li>
+
+            <li><a th:href="@{/createRequest}" class="nav-link px-2 link-dark" th:text="#{header.createRequest}">Create
+                Request</a></li>
+
+            <li><a th:if="${session.sessionUser.role.name() eq 'ADMIN'}" th:href="@{/createNews}" class="nav-link px-2 link-dark" th:text="#{header.createNews}">Create
+                News</a></li>
+
+            <li><a th:if="${session.sessionUser.role.name() eq 'ADMIN'}" th:href="@{/users}" class="nav-link px-2 link-dark" th:text="#{header.users}">Users</a></li>
+        </ul>
+
+        <div th:replace="~{fragments::locale}"></div>
+
+        <div class="col-md-3 text-end">
+            <!--            <a th:href="@{/loginPage}" class="btn btn-outline-primary me-2" th:text="#{header.login}">Login</a>-->
+            <!--            <a th:href="@{/registration}" class="btn btn-primary" th:text="#{header.sign-up}">Sign-up</a>-->
+            <form th:action="@{/logout}" th:method="post">
+                <input class="btn btn-outline-primary me-2" th:value="#{login.logout}" type="submit">
+            </form>
+        </div>
+    </header>
+</div>
+
+<div th:fragment="locale">
+    <a th:href="@{?lang=en_US}" class="btn btn-primary">Eng</a>
+    <a th:href="@{?lang=ru_RU}" class="btn btn-primary">Рус</a>
+</div>
+
+</body>
+</html>
